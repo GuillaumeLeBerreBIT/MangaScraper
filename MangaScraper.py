@@ -27,6 +27,10 @@ parser.add_argument('-s', '--stopage', type=int, default=0,required = False, hel
 Is added so the page can load longer and have better quality.')                                   
 args = parser.parse_args()
 
+# Making the url links to AOT Manga. 
+link = args.manga
+dictManga = dic.MangaLinks(link)
+
 ##############################################
 # Art
 ##############################################
@@ -49,7 +53,7 @@ print("▀████▄     ▄███▀\n\
 
 location = os.getcwd()
 
-# Make a path if not exist and change to the path
+# Make a path if not exist and change to the path >> Folder containing all the mangas
 if not os.path.isdir("Manga"):
     os.mkdir("Manga")
     os.chdir("Manga")
@@ -58,8 +62,8 @@ else:
 
 # Set the location of the head folder >> Used to have full pdf file
 full_chapter_loc = os.getcwd()
-folder_of_images = "Images-" + args.chapter
-# Make a path if not exist and change to the path to a subfolder
+folder_of_images = "Images-" + dictManga['1'] + "-" + args.chapter
+# Make a path if not exist and change to the path to a subfolder >> Containing the folder of everything of one chapter
 if not os.path.isdir(folder_of_images):
     os.mkdir(folder_of_images)
     os.chdir(folder_of_images)
@@ -70,17 +74,11 @@ else:
 # ACCESING THE BROWSER & PARSE RESULTS
 ##############################################
 
-# Making the url links to AOT Manga. 
-link = args.manga
-manga_link = dic.MangaLinks(link)
-
+# Returns the number of the chapter
 chapter = args.chapter
 filled = chapter.zfill(3)
 # Get the full formatted url
-completeurl = manga_link + filled
-
-# Work with this url to parse the results
-#hcurl = 'https://ww8.readsnk.com/chapter/shingeki-no-kyojin-chapter-069'
+completeurl = dictManga['0'] + filled
 
 # Fetch webpage and save in soup object
 headers = {}
@@ -130,7 +128,8 @@ for page in pages_container:
         driver.quit()
 print("\n" + "-"*40)
 
-print(dictChap)
+# To check the order and if the capters are in the dicitonary. 
+#print(dictChap)
 
 ##############################################
 # CONVERT TO ONE PDF FILE
@@ -145,7 +144,7 @@ images_loc = full_chapter_loc + '/' + folder_of_images + '/'
 # The RGB mode does not have an alpha channel, so it can be saved as a PDF without any issues.
 images = [Image.open(images_loc + v).convert("RGB") for v in dictChap.values()]
 
-pdf_path = full_chapter_loc + '/Chapter-' + filled + '.pdf'
+pdf_path = full_chapter_loc + '/' + dictManga['1'] +'-Chapter-' + filled + '.pdf'
     
 images[0].save(pdf_path, "PDF" ,resolution=100.0, save_all=True, append_images=images[1:])
 

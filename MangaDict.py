@@ -8,5 +8,6 @@ def MangaLinks(link):
 
     if link == "AOT" or link == "AttackOnTitan":
         url = 'https://ww8.readsnk.com/chapter/shingeki-no-kyojin-chapter-'
-    
-    return url
+        name = "AOT"
+    # This will return the variables in a dictionary, can call for them in the main code. 
+    return {'0': url, '1': name}
