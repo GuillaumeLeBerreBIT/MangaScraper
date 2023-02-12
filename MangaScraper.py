@@ -11,7 +11,7 @@
 
 import os, urllib.request, urllib.parse, re, argparse, time
 from bs4 import BeautifulSoup
-import WebModules as web            # Not yet in use
+import WebModules as web          # Not in use (limits of of "FORBIDDEN 403") downloads
 import MangaDict as dic
 from selenium import webdriver
 from PIL import Image
@@ -35,7 +35,7 @@ dictManga = dic.MangaLinks(link)
 # Art
 ##############################################
 
-print("▀████▄     ▄███▀\n\
+print("\n▀████▄     ▄███▀\n\
   ████    ████\n\
   █ ██   ▄█ ██  ▄█▀██▄ ▀████████▄  ▄█▀█████▄█▀██▄\n\
   █  █▓  █▀ ██ ██   ██   ██    ██ ▄██  ██ ██   ██\n\
@@ -50,7 +50,7 @@ print("▀████▄     ▄███▀\n\
 ##############################################
 # SETTING UP LOCATION
 ##############################################
-
+# Getting the working directory
 location = os.getcwd()
 
 # Make a path if not exist and change to the path >> Folder containing all the mangas
@@ -74,10 +74,10 @@ else:
 # ACCESING THE BROWSER & PARSE RESULTS
 ##############################################
 
-# Returns the number of the chapter
+# Returns the number of the chapter >> Through command line
 chapter = args.chapter
 filled = chapter.zfill(3)
-# Get the full formatted url
+# Get the full formatted url by using the link in Dictionary Module.
 completeurl = dictManga['0'] + filled
 
 # Fetch webpage and save in soup object
@@ -87,7 +87,7 @@ request = urllib.request.Request(completeurl, headers = headers)
 response = urllib.request.urlopen(request)
 response_data = response.read().decode('utf-8')
 soup = BeautifulSoup(response_data, 'html.parser')
-
+# Creating a soup object to search the site
 pages_container = soup.find("div", {"class" : "js-pages-container"})
 
 print("\n" + "-"*40)
@@ -126,7 +126,6 @@ for page in pages_container:
         driver.save_screenshot(image_name)
         # Does quit the browser
         driver.quit()
-print("\n" + "-"*40)
 
 # To check the order and if the capters are in the dicitonary. 
 #print(dictChap)
@@ -134,7 +133,7 @@ print("\n" + "-"*40)
 ##############################################
 # CONVERT TO ONE PDF FILE
 ##############################################
-print("\n" + "-"*40 + "\nConverting the pictures in one PDF file\n" + "-"*40 + "\n")
+print("\n" + "-"*40 + "\nConverting the pictures in one PDF file\n" + "-"*40)
 # We want to go out of the subfolder where the converted images will be
 os.chdir(full_chapter_loc)
 # Adding the image folde to the path
@@ -148,6 +147,6 @@ pdf_path = full_chapter_loc + '/' + dictManga['1'] +'-Chapter-' + filled + '.pdf
     
 images[0].save(pdf_path, "PDF" ,resolution=100.0, save_all=True, append_images=images[1:])
 
-print("\nTask complete! Enjoy reading!")
+print("-"*40 + "\nTask complete! Enjoy reading!\n" + "-"*40)
 
 
