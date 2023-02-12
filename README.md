@@ -36,3 +36,21 @@ The script fetches the webpage for the specified manga and chapter, and uses the
 
 ## Converting to PDF file
 The script will use the collected images and generate one pdf file. This will create manga on your local PC. This makes it so can read it offline. 
+
+## Mangas 
+These are the commands that can be used to search the chapters & amaount of mangas:
+- `AOT` or `AttackOnTitan` : 139
+- `OP` or `OnePiece` : 279
+- `Naruto` : 700
+- `Boruto` : 77
+- `BC` or `BlackClover` : 350
+- `TR` or `TokyoRevengers` : 279
+- `MHA` or `MyHeroAcademia` : 380
+- `DS` or `DemonSlayer` : 206
+- `VS` or `VinlandSaga` : 199
+- `JJK` or `JujutsuKaisen` : 213
+- `CSM` or `ChainsawMan` : 119
+
+More to come ...
+
+Note that a lot of these mangas are still ongoing and thus can have more then said on README.md file. Ill try to update them as accurate as possible. 
